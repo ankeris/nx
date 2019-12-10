@@ -50,15 +50,15 @@ const addPostInstall = updateJsonInTree('package.json', json => {
   }
 
   if (
-    json.scripts['postinstall'] &&
-    json.scripts['postinstall'].includes('patch-package')
+    json.scripts.postinstall &&
+    json.scripts.postinstall.includes('patch-package')
   ) {
     return json;
   }
 
   if (json.scripts.postinstall) {
     if (!(json.scripts.postinstall as string).includes('patch-package')) {
-      json.scripts.postinstall = `patch-package && ${json.script.postinstall}`;
+      json.scripts.postinstall = json.scripts.postinstall + ' && patch-package';
     }
   } else {
     json.scripts.postinstall = 'patch-package';
